@@ -5,6 +5,8 @@ import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-nativ
 // Redux
 import { connect } from 'react-redux'
 import { createDeck } from './actions'
+// Themes
+import theme from '../styles/themes'
 
 class NewDeck extends React.Component {
   state = {
@@ -35,7 +37,7 @@ class NewDeck extends React.Component {
         {error &&
           <FormValidationMessage>Every deck requires a title</FormValidationMessage>
         }
-        <Button style={{ marginTop: 20 }} title="Submit" onPress={this.submitDeck.bind(this)}/>
+        <Button buttonStyle={styles.submit} title="Submit" onPress={this.submitDeck.bind(this)}/>
       </View>
     )
   }
@@ -55,4 +57,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 40,
   },
+  submit: {
+    marginTop: 20,
+    backgroundColor: theme.primaryControl,
+  }
 })
