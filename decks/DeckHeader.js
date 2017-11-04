@@ -1,8 +1,10 @@
 // Libraries
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { Card } from 'react-native-elements'
+// Theme
+import theme from '../styles/themes'
 
 export default class DeckHeader extends React.Component {
   render() {
@@ -10,7 +12,7 @@ export default class DeckHeader extends React.Component {
 
     return (
       <Card title={deck.title}>
-        <Text>{`${(deck.cards || []).length} cards`}</Text>
+        <Text style={styles.subtext}>{`${(deck.cards || []).length} cards`}</Text>
       </Card>
     )
   }
@@ -19,3 +21,10 @@ export default class DeckHeader extends React.Component {
 DeckHeader.PropTypes = {
   deck: PropTypes.object.isRequired,
 }
+
+const styles = StyleSheet.create({
+  subtext: {
+    textAlign: 'center',
+    color: theme.subtext,
+  }
+})
