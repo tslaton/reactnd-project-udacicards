@@ -31,7 +31,7 @@ function addDeck(deck) {
 }
 
 export function createCard(deckID, card) {
-  return (dispatch) => api.createCard({ deckID, card: { ...card, id: uuid(), timestamp: Date.now() }})
+  return (dispatch) => api.createCard(deckID, { ...card, id: uuid(), timestamp: Date.now()})
     .then(card => dispatch(addCard(deckID, card)))
 }
 

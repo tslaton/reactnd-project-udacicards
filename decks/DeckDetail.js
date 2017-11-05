@@ -7,15 +7,13 @@ import { Button } from 'react-native-elements'
 import theme from '../styles/themes'
 
 export default class DeckDetail extends React.Component {
-  addCard() {
+  addCard(deck) {
     const { navigation } = this.props
-    const deck = navigation.state.params.deck
     navigation.navigate('AddCard', { deck })
   }
 
-  startQuiz() {
+  startQuiz(deck) {
     const { navigation } = this.props
-    const deck = navigation.state.params.deck
     navigation.navigate('Quiz', { deck })
   }
 
@@ -27,8 +25,8 @@ export default class DeckDetail extends React.Component {
       <View>
         <Text style={styles.header}>{deck.title}</Text>
         <Text style={styles.subtext}>{`${(deck.cards || []).length} cards`}</Text>
-        <Button buttonStyle={styles.card} title="Add Card" onPress={this.addCard.bind(this)}/>
-        <Button buttonStyle={styles.quiz} title="Start Quiz" onPress={this.startQuiz.bind(this)}/>
+        <Button buttonStyle={styles.card} title="Add Card" onPress={this.addCard.bind(this, deck)}/>
+        <Button buttonStyle={styles.quiz} title="Start Quiz" onPress={this.startQuiz.bind(this, deck)}/>
       </View>
     )
   }
