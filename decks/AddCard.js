@@ -3,8 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
-// Redux
 import { connect } from 'react-redux'
+// Modules
 import { createCard } from './actions'
 // Themes
 import theme from '../styles/themes'
@@ -18,9 +18,8 @@ class AddCard extends React.Component {
   }
 
   submitCard() {
-    const { navigation, createCard } = this.props
+    const { deck, createCard } = this.props
     const { question, answer, questionHasIssue, answerHasIssue } = this.state
-    const deck = navigation.state.params.deck
     if (!questionHasIssue && !answerHasIssue) {
       const card = { question, answer }
       createCard(deck.id, card)
@@ -56,7 +55,12 @@ class AddCard extends React.Component {
   }
 }
 
-export default connect(null, { createCard })(AddCard)
+function mapStateToProps(state, { navigation }) {
+  const deckID = navigation.state.params.deckID
+  return { deck: state[deckID] }
+}
+
+export default connect(mapStateToProps, { createCard })(AddCard)
 
 AddCard.PropTypes = {
   navigation: PropTypes.object.isRequired,

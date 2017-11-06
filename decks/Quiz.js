@@ -2,13 +2,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
+import { connect } from 'react-redux'
 // Theme
 import theme from '../styles/themes'
 
-export default class Quiz extends React.Component {
+class Quiz extends React.Component {
   render() {
-    const { navigation } = this.props
-    const deck = navigation.state.params.deck
+    const { deck } = this.props
 
     return (
       <View>
@@ -17,6 +17,13 @@ export default class Quiz extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state, { navigation }) {
+  const deckID = navigation.state.params.deckID
+  return { deck: state[deckID] }
+}
+
+export default connect(mapStateToProps, null)(Quiz)
 
 Quiz.PropTypes = {
   navigation: PropTypes.object.isRequired,

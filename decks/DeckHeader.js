@@ -3,14 +3,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, Text, Button, Platform } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
+import { connect } from 'react-redux'
 // Icons
 import { Ionicons } from '@expo/vector-icons'
 // Theme
 import theme from '../styles/themes'
 
-export default class DeckHeader extends React.Component {
+class DeckHeader extends React.Component {
+  openDeckDetail() {
+    const { deck, navigation } = this.props
+    navigation.navigate('DeckDetail', { deckID: deck.id })
+  }
+
   render() {
-    const { deck, openDeckDetail } = this.props
+    const { deck } = this.props
+    const numCards = (deck.cards || []).length
+    const subtext = numCards === 1 ? '1 card' : `${numCards} cards`
 
     return (
       <Card>
@@ -22,19 +30,25 @@ export default class DeckHeader extends React.Component {
               name: Platform.OS === 'ios' ? 'ios-arrow-dropright' : 'md-arrow-dropright',
             }}
             title={deck.title}
-            onPress={openDeckDetail}
+            onPress={this.openDeckDetail.bind(this)}
           />
         </View>
         <Divider style={styles.divider}/>
-        <Text style={styles.subtext}>{`${(deck.cards || []).length} cards`}</Text>
+        <Text style={styles.subtext}>{subtext}</Text>
       </Card>
     )
   }
 }
 
+function mapStateToProps(state, { deckID }) {
+  return { deck: state[deckID] }
+}
+
+export default connect(mapStateToProps, null)(DeckHeader)
+
 DeckHeader.PropTypes = {
-  deck: PropTypes.object.isRequired,
-  openDeckDetail: PropTypes.func.isRequired,
+  deckID: PropTypes.string.isRequired,
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

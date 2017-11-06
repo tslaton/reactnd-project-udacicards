@@ -13,11 +13,6 @@ class DeckList extends React.Component {
     this.props.fetchDecks()
   }
 
-  openDeckDetail(deck) {
-    const { navigation } = this.props
-    navigation.navigate('DeckDetail', { deck })
-  }
-
   render() {
     const { decks, navigation } = this.props
 
@@ -25,7 +20,7 @@ class DeckList extends React.Component {
       <View>
         <FlatList
           data={decks}
-          renderItem={({ item }) => <DeckHeader deck={item} openDeckDetail={this.openDeckDetail.bind(this, item)}/>}
+          renderItem={({ item }) => <DeckHeader deckID={item.id} navigation={navigation}/>}
           keyExtractor={(item) => item.id}
         />
       </View>
