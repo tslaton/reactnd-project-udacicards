@@ -15,18 +15,22 @@ class DeckDetail extends React.Component {
 
   startQuiz() {
     const { deck, navigation } = this.props
-    navigation.navigate('Quiz', { deckID: deck.id })
+    navigation.navigate('Quiz', { deckID: deck.id, deckDetailKey: navigation.state.key })
   }
 
   render() {
-    const { deck } = this.props
+    const { deck, navigation } = this.props
+    const numCards = (deck.cards || []).length
+    const subtext = numCards === 1 ? '1 card' : `${numCards} cards`
 
     return (
       <View>
         <Text style={styles.header}>{deck.title}</Text>
-        <Text style={styles.subtext}>{`${(deck.cards || []).length} cards`}</Text>
+        <Text style={styles.subtext}>{subtext}</Text>
         <Button buttonStyle={styles.card} title="Add Card" onPress={this.addCard.bind(this)}/>
-        <Button buttonStyle={styles.quiz} title="Start Quiz" onPress={this.startQuiz.bind(this)}/>
+        {numCards > 0 &&
+          <Button buttonStyle={styles.quiz} title="Start Quiz" onPress={this.startQuiz.bind(this)}/>
+        }
       </View>
     )
   }

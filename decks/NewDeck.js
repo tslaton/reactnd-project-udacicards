@@ -1,5 +1,6 @@
 // Libraries
 import React from 'react'
+import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 // Redux
@@ -20,6 +21,7 @@ class NewDeck extends React.Component {
     if (title) {
       this.props.createDeck({ title })
     }
+    this.props.navigation.goBack()
   }
 
   render() {
@@ -44,6 +46,10 @@ class NewDeck extends React.Component {
 }
 
 export default connect(null, { createDeck })(NewDeck)
+
+NewDeck.PropTypes = {
+  navigation: PropTypes.object.isRequired,
+}
 
 const styles = StyleSheet.create({
   container: {

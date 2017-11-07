@@ -18,12 +18,13 @@ class AddCard extends React.Component {
   }
 
   submitCard() {
-    const { deck, createCard } = this.props
+    const { navigation, deck, createCard } = this.props
     const { question, answer, questionHasIssue, answerHasIssue } = this.state
     if (!questionHasIssue && !answerHasIssue) {
       const card = { question, answer }
       createCard(deck.id, card)
     }
+    navigation.goBack()
   }
 
   render() {

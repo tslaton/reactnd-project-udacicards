@@ -8,6 +8,8 @@ const theme = {
   secondaryControl: colors.purple,
   accept: colors.green,
   reject: colors.red,
+  question: colors.black,
+  answer: colors.purple,
 }
 
 export default theme
