@@ -23,8 +23,8 @@ class AddCard extends React.Component {
     if (!questionHasIssue && !answerHasIssue) {
       const card = { question, answer }
       createCard(deck.id, card)
+      navigation.goBack()
     }
-    navigation.goBack()
   }
 
   render() {

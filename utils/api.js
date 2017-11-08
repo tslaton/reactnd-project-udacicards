@@ -32,6 +32,6 @@ export function createCard(deckID, card) {
       const cards = deck.cards || []
       const newDecks = { ...decks, [deckID]: { ...deck, cards: [...cards, card] } }
       AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
-      return deck
+      return card
     })
 }

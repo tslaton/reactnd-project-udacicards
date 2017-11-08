@@ -20,7 +20,10 @@ function receiveDecks(decks) {
 
 export function createDeck(deck) {
   return (dispatch) => api.createDeck({ ...deck, id: uuid(), timestamp: Date.now() })
-    .then(deck => dispatch(addDeck(deck)))
+    .then(deck => {
+      dispatch(addDeck(deck))
+      return deck
+    })
 }
 
 function addDeck(deck) {

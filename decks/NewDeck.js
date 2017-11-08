@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { NavigationActions } from 'react-navigation'
 // Redux
 import { connect } from 'react-redux'
 import { createDeck } from './actions'
@@ -12,20 +13,34 @@ import theme from '../styles/themes'
 class NewDeck extends React.Component {
   state = {
     title: '',
-    error: false,
+    hasIssue: false,
   }
 
   submitDeck() {
     const title = this.state.title
-    this.setState({ error: !title })
+    this.setState({ hasIssue: !title })
     if (title) {
       this.props.createDeck({ title })
+        .then(deck => {
+          this.setState({ title: '' })
+          const navigation = this.props.navigation
+          const forceNavigate = NavigationActions.reset({
+            index: 1,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Home' }),
+              NavigationActions.navigate({
+                routeName: 'DeckDetail',
+                params: { deckID: deck.id }
+              })
+            ],
+          })
+          this.props.navigation.dispatch(forceNavigate)
+        })
     }
-    this.props.navigation.goBack()
   }
 
   render() {
-    const { title, error } = this.state
+    const { title, hasIssue } = this.state
 
     return (
       <View style={styles.container}>
@@ -34,9 +49,9 @@ class NewDeck extends React.Component {
         <FormInput
           defaultValue="Enter a title for this deck"
           onChangeText={(title) => this.setState({ title })}
-          shake={error}
+          shake={hasIssue}
         />
-        {error &&
+        {hasIssue &&
           <FormValidationMessage>Every deck requires a title</FormValidationMessage>
         }
         <Button buttonStyle={styles.submit} title="Submit" onPress={this.submitDeck.bind(this)}/>

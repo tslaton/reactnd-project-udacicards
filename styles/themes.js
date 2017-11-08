@@ -6,6 +6,7 @@ const theme = {
   subtext: colors.gray,
   primaryControl: colors.blue,
   secondaryControl: colors.purple,
+  tertiaryControl: colors.orange,
   accept: colors.green,
   reject: colors.red,
   question: colors.black,

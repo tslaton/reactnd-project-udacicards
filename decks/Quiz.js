@@ -25,6 +25,14 @@ class Quiz extends React.Component {
     navigation.goBack()
   }
 
+  restart() {
+    this.setState({
+      currentIndex: 0,
+      isFlipped: false,
+      points: 0,
+    })
+  }
+
   flip() {
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }))
   }
@@ -73,14 +81,19 @@ class Quiz extends React.Component {
             </View>
           : <View style={styles.resultsContainer}>
               <Text style={styles.results}>{resultsInfo}</Text>
-              <Text style={styles.results}>Your score for this quiz is: <Text style={styles.score}>{score}</Text></Text>
+              <Text style={styles.results}>Your score is: <Text style={styles.score}>{score}</Text></Text>
               <Button
                 buttonStyle={styles.primary}
+                title="Retake Quiz"
+                onPress={this.restart.bind(this)}
+              />
+              <Button
+                buttonStyle={styles.secondary}
                 title={`Return to ${deck.title}`}
                 onPress={this.goToDeckDetails.bind(this)}
               />
               <Button
-                buttonStyle={styles.secondary}
+                buttonStyle={styles.tertiary}
                 title="Return to Deck List"
                 onPress={this.goToDeckList.bind(this)}
               />
@@ -139,6 +152,10 @@ const styles = StyleSheet.create({
   },
   secondary: {
     backgroundColor: theme.secondaryControl,
+    marginBottom: 20,
+  },
+  tertiary: {
+    backgroundColor: theme.tertiaryControl,
     marginBottom: 20,
   },
   correct: {
