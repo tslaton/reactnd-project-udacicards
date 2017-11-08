@@ -4,7 +4,7 @@ import {
   RECEIVE_DECKS,
   ADD_DECK,
   ADD_CARD,
-} from '../actions'
+} from './types'
 
 export function fetchDecks() {
   return (dispatch) => api.getDecks()

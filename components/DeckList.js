@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { View, FlatList } from 'react-native'
 // Redux
 import { connect } from 'react-redux'
-import { fetchDecks } from './actions'
+import { fetchDecks } from '../actions'
 // Components
 import DeckHeader from './DeckHeader'
 

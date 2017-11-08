@@ -7,13 +7,13 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider as ReduxProvider } from 'react-redux'
 import thunk from 'redux-thunk'
 // Modules
-import reducer from './reducer'
+import reducer from './reducers'
 // Comonents
-import DeckList from './decks/DeckList'
-import DeckDetail from './decks/DeckDetail'
-import AddCard from './decks/AddCard'
-import Quiz from './decks/Quiz'
-import NewDeck from './decks/NewDeck'
+import DeckList from './components/DeckList'
+import DeckDetail from './components/DeckDetail'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
+import NewDeck from './components/NewDeck'
 // Styles
 import theme from './styles/themes'
 

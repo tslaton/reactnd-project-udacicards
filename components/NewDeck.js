@@ -6,7 +6,7 @@ import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-nativ
 import { NavigationActions } from 'react-navigation'
 // Redux
 import { connect } from 'react-redux'
-import { createDeck } from './actions'
+import { createDeck } from '../actions'
 // Themes
 import theme from '../styles/themes'
 

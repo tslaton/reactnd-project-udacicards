@@ -5,7 +5,7 @@ import { StyleSheet, View, Text } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 // Modules
-import { createCard } from './actions'
+import { createCard } from '../actions'
 // Themes
 import theme from '../styles/themes'
 
