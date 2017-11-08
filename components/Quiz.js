@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
+// Modules
+import { recordScore } from '../actions'
 // Theme
 import theme from '../styles/themes'
 
@@ -12,6 +14,11 @@ class Quiz extends React.Component {
     currentIndex: 0,
     isFlipped: false,
     points: 0,
+  }
+
+  getCards() {
+    const { deck } = this.props
+    return deck.cards || []
   }
 
   goToDeckList() {
@@ -38,21 +45,29 @@ class Quiz extends React.Component {
   }
 
   mark(correct) {
-    this.setState(prevState => ({
-      currentIndex: prevState.currentIndex + 1,
+    const points = this.state.points + (correct ? 1 : 0)
+    const nextIndex = this.state.currentIndex + 1
+    const numCards = this.getCards().length
+    const shouldSubmitScore = nextIndex >= numCards
+    if (shouldSubmitScore) {
+      const { deck, recordScore } = this.props
+      recordScore(deck.id, 100 * points / numCards)
+    }
+    this.setState({
+      currentIndex: nextIndex,
       isFlipped: false,
-      points: prevState.points + (correct ? 1 : 0),
-    }))
+      points: points,
+    })
   }
 
   render() {
     const { deck } = this.props
     const { currentIndex, isFlipped, points } = this.state
-    const cards = deck.cards || []
+    const cards = this.getCards()
     const card = cards[currentIndex]
     const progressInfo = `${currentIndex + 1} / ${cards.length}`
     const resultsInfo = `You answered ${points} ${points === 1 ? 'question' : 'questions'} correctly`
-    const score = `${(100 * points / cards.length).toFixed(0)}%`
+    const score = 100 * points / cards.length
 
     return (
       <View style={{ flex: 1 }}>
@@ -81,7 +96,9 @@ class Quiz extends React.Component {
             </View>
           : <View style={styles.resultsContainer}>
               <Text style={styles.results}>{resultsInfo}</Text>
-              <Text style={styles.results}>Your score is: <Text style={styles.score}>{score}</Text></Text>
+              <Text style={styles.results}>Your score is:&nbsp;
+                <Text style={score < 75.0 ? styles.bad : styles.good}>{`${score.toFixed(0)}%`}</Text>
+              </Text>
               <Button
                 buttonStyle={styles.primary}
                 title="Retake Quiz"
@@ -109,7 +126,7 @@ function mapStateToProps(state, { navigation }) {
   return { deck: state[deckID] }
 }
 
-export default connect(mapStateToProps, null)(Quiz)
+export default connect(mapStateToProps, { recordScore })(Quiz)
 
 Quiz.PropTypes = {
   navigation: PropTypes.object.isRequired,
@@ -171,8 +188,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 40,
   },
-  score: {
+  good: {
     fontSize: 32,
     color: theme.accept,
-  }
+  },
+  bad: {
+    fontSize: 32,
+    color: theme.reject,
+  },
 })

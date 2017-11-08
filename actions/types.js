@@ -1,4 +1,6 @@
-// Decks
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
+export const REMOVE_DECK = 'REMOVE_DECK'
 export const ADD_CARD = 'ADD_CARD'
+export const SET_SCORE = 'SET_SCORE'
+export const CLEAR_SCORE = 'CLEAR_SCORE'

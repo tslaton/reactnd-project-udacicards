@@ -19,6 +19,7 @@ class DeckHeader extends React.Component {
     const { deck } = this.props
     const numCards = (deck.cards || []).length
     const subtext = numCards === 1 ? '1 card' : `${numCards} cards`
+    const score = (deck.latestScore || {}).score
 
     return (
       <Card>
@@ -35,6 +36,9 @@ class DeckHeader extends React.Component {
         </View>
         <Divider style={styles.divider}/>
         <Text style={styles.subtext}>{subtext}</Text>
+        {score &&
+          <Text style={score < 75.0 ? styles.bad : styles.good}>{`${score.toFixed(0)}%`}</Text>
+        }
       </Card>
     )
   }
@@ -64,5 +68,13 @@ const styles = StyleSheet.create({
   subtext: {
     textAlign: 'center',
     color: theme.subtext,
+  },
+  good: {
+    textAlign: 'center',
+    color: theme.accept,
+  },
+  bad: {
+    textAlign: 'center',
+    color: theme.reject,
   },
 })
