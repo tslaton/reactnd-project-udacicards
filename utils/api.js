@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 const DECKS_STORAGE_KEY = 'UdaciCards:decks'
 
 export function deleteAllDecks() {
-  return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify({}))
+  return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
 }
 
 export function getDecks() {

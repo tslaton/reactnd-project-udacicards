@@ -1,4 +1,6 @@
+// Libraries
 import uuid from 'uuid/v1'
+// Modules
 import * as api from '../utils/api'
 import {
   RECEIVE_DECKS,
@@ -8,6 +10,10 @@ import {
   SET_SCORE,
   CLEAR_SCORE,
 } from './types'
+import {
+  setStudyReminder,
+  clearStudyReminder,
+} from '../utils/notifications'
 
 export function fetchDecks() {
   return dispatch => api.getDecks()
@@ -66,7 +72,10 @@ function addCard(deckID, card) {
 
 export function recordScore(deckID, score) {
   return dispatch => api.recordScore(deckID, score, Date.now())
-    .then(({ score, timestamp, deckID }) => dispatch(setScore(deckID, score, timestamp)))
+    .then(({ score, timestamp, deckID }) => {
+      clearStudyReminder().then(setStudyReminder())
+      dispatch(setScore(deckID, score, timestamp))
+    })
 }
 
 function setScore(deckID, score, timestamp) {

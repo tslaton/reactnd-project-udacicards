@@ -8,7 +8,8 @@ import { Provider as ReduxProvider } from 'react-redux'
 import thunk from 'redux-thunk'
 // Modules
 import reducer from './reducers'
-// Comonents
+import { setStudyReminder } from './utils/notifications'
+// Components
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
@@ -74,6 +75,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setStudyReminder()
+  }
+
   render() {
     return (
       <ReduxProvider store={store}>
