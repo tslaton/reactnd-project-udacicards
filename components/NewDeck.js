@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, KeyboardAvoidingView, Text } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 // Redux
@@ -43,11 +43,11 @@ class NewDeck extends React.Component {
     const { title, hasIssue } = this.state
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="position" style={styles.container}>
         <Text style={styles.header}>Create a New Deck</Text>
         <FormLabel>Deck Title</FormLabel>
         <FormInput
-          defaultValue="Enter a title for this deck"
+          placeholder="Enter a title for this deck"
           onChangeText={(title) => this.setState({ title })}
           shake={hasIssue}
         />
@@ -55,7 +55,7 @@ class NewDeck extends React.Component {
           <FormValidationMessage>Every deck requires a title</FormValidationMessage>
         }
         <Button buttonStyle={styles.submit} title="Submit" onPress={this.submitDeck.bind(this)}/>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

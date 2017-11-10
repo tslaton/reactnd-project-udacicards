@@ -150,14 +150,14 @@ const styles = StyleSheet.create({
   question: {
     textAlign: 'center',
     fontSize: 48,
-    marginTop: 80,
+    marginTop: 60,
     marginBottom: 20,
     color: theme.question,
   },
   answer: {
     textAlign: 'center',
     fontSize: 48,
-    marginTop: 80,
+    marginTop: 60,
     marginBottom: 20,
     color: theme.answer,
   },

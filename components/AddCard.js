@@ -20,7 +20,8 @@ class AddCard extends React.Component {
   submitCard() {
     const { navigation, deck, createCard } = this.props
     const { question, answer, questionHasIssue, answerHasIssue } = this.state
-    if (!questionHasIssue && !answerHasIssue) {
+    this.setState({ questionHasIssue: !question, answerHasIssue: !answer })
+    if (question && answer) {
       const card = { question, answer }
       createCard(deck.id, card)
       navigation.goBack()
@@ -34,7 +35,7 @@ class AddCard extends React.Component {
       <View style={styles.container}>
         <FormLabel>Question</FormLabel>
         <FormInput
-          defaultValue="Enter a question"
+          placeholder="Enter a question"
           onChangeText={question => this.setState({ question })}
           shake={questionHasIssue}
         />
@@ -43,7 +44,7 @@ class AddCard extends React.Component {
         }
         <FormLabel>Answer</FormLabel>
         <FormInput
-          defaultValue="Enter the correct answer"
+          placeholder="Enter the correct answer"
           onChangeText={answer => this.setState({ answer })}
           shake={answerHasIssue}
         />
