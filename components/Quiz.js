@@ -152,6 +152,8 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginTop: 60,
     marginBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     color: theme.question,
   },
   answer: {
@@ -159,6 +161,8 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginTop: 60,
     marginBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     color: theme.answer,
   },
   flipper: {
