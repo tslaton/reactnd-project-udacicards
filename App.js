@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, Platform } from 'react-native'
 import { Constants } from 'expo'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -17,10 +17,6 @@ import NewDeck from './components/NewDeck'
 // Styles
 import theme from './styles/themes'
 
-// temp
-import * as api from './utils/api'
-// api.deleteAllDecks()
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
@@ -29,14 +25,6 @@ const store = createStore(
     applyMiddleware(thunk)
   )
 )
-
-function StyledStatusBar ({ backgroundColor, ...props }) {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
-    </View>
-  )
-}
 
 const Tabs = TabNavigator({
   Deck: {
@@ -51,6 +39,12 @@ const Tabs = TabNavigator({
       tabBarLabel: 'New Deck',
     }
   },
+}, {
+  tabBarOptions: {
+    labelStyle: {
+      paddingBottom: Platform.OS === 'ios' ? 16 : 0,
+    },
+  },
 })
 
 const MainNavigator = StackNavigator({
@@ -59,12 +53,23 @@ const MainNavigator = StackNavigator({
   },
   DeckDetail: {
     screen: DeckDetail,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: navigation.state.params.title,
+      }
+    },
   },
   AddCard: {
     screen: AddCard,
+    navigationOptions: {
+      title: 'Add Card',
+    },
   },
   Quiz: {
     screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
+    },
   }
 })
 
@@ -73,7 +78,10 @@ export default class App extends React.Component {
     return (
       <ReduxProvider store={store}>
         <View style={{ flex: 1 }}>
-          <StyledStatusBar backgroundColor={theme.header} barStyle="light-content"/>
+          <StatusBar
+            translucent
+            barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}
+          />
           <MainNavigator/>
         </View>
       </ReduxProvider>

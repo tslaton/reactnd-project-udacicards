@@ -11,6 +11,13 @@ import { deleteDeck } from '../actions'
 import theme from '../styles/themes'
 
 class DeckDetail extends React.Component {
+  componentDidMount() {
+    const { deck, navigation } = this.props
+    navigation.setParams({
+      title: deck.title,
+    })
+  }
+
   addCard() {
     const { deck, navigation } = this.props
     navigation.navigate('AddCard', { deckID: deck.id })
