@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Text, Button, Platform } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 // Icons
@@ -19,25 +19,22 @@ class DeckHeader extends React.Component {
     const { deck } = this.props
     const numCards = (deck.cards || []).length
     const subtext = numCards === 1 ? '1 card' : `${numCards} cards`
-    const score = (deck.latestScore || {}).score
+    const latestScore = deck.latestScore
 
     return (
       <Card>
-        <View>
-          <Button
-            iconRight
-            icon={{
-              type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'ios-arrow-dropright' : 'md-arrow-dropright',
-            }}
-            title={deck.title}
-            onPress={this.openDeckDetail.bind(this)}
+        <TouchableOpacity style={styles.button} onPress={this.openDeckDetail.bind(this)}>
+          <Text style={styles.title}>{deck.title}</Text>
+          <Ionicons
+            style={{ color: theme.primaryControl, paddingTop: 2 }}
+            name={Platform.OS === 'ios' ? 'ios-arrow-dropright' : 'md-arrow-dropright'}
+            size={20}
           />
-        </View>
+        </TouchableOpacity>
         <Divider style={styles.divider}/>
         <Text style={styles.subtext}>{subtext}</Text>
-        {score &&
-          <Text style={score < 75.0 ? styles.bad : styles.good}>{`${score.toFixed(0)}%`}</Text>
+        {latestScore &&
+          <Text style={latestScore.score < 75.0 ? styles.bad : styles.good}>{`${latestScore.score.toFixed(0)}%`}</Text>
         }
       </Card>
     )
@@ -56,13 +53,20 @@ DeckHeader.PropTypes = {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    textAlign: 'center',
-    color: theme.header,
+  button: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: theme.primaryControl,
+    fontSize: 20,
+    paddingRight: 6,
   },
   divider: {
     backgroundColor: theme.subtext,
-    marginBottom: 10,
+    marginTop: 10,
     marginBottom: 10,
   },
   subtext: {

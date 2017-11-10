@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 // Modules
@@ -78,11 +78,9 @@ class Quiz extends React.Component {
                 ? <Text style={styles.answer}>{card.answer}</Text>
                 : <Text style={styles.question}>{card.question}</Text>
               }
-              <Button
-                buttonStyle={styles.primary}
-                title={isFlipped ? 'Show Question' : 'Show Answer'}
-                onPress={this.flip.bind(this)}
-              />
+              <TouchableOpacity onPress={this.flip.bind(this)}>
+                <Text style={styles.flipper}>{isFlipped ? 'Show Question' : 'Show Answer'}</Text>
+              </TouchableOpacity>
               <Button
                 buttonStyle={styles.correct}
                 title="Correct"
@@ -153,15 +151,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 48,
     marginTop: 80,
-    marginBottom: 80,
+    marginBottom: 20,
     color: theme.question,
   },
   answer: {
     textAlign: 'center',
     fontSize: 48,
     marginTop: 80,
-    marginBottom: 80,
+    marginBottom: 20,
     color: theme.answer,
+  },
+  flipper: {
+    textAlign: 'center',
+    fontSize: 24,
+    color: theme.primaryControl,
   },
   primary: {
     backgroundColor: theme.primaryControl,
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
   },
   correct: {
     backgroundColor: theme.accept,
+    marginTop: 60,
     marginBottom: 20,
   },
   incorrect: {
